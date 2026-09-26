@@ -1,0 +1,15 @@
+[
+  { "ingredientId": "baileys", "fillPercent": 100 },
+  { "ingredientId": "kahlua", "fillPercent": 100 },
+  { "ingredientId": "vodka", "fillPercent": 100 },
+  { "ingredientId": "tequila", "fillPercent": 100 },
+  { "ingredientId": "lime-juice", "fillPercent": 100 },
+  { "ingredientId": "simple-syrup", "fillPercent": 100 },
+  { "ingredientId": "grenadine", "fillPercent": 100 },
+  { "ingredientId": "blue-curacao", "fillPercent": 100 },
+  { "ingredientId": "cointreau", "fillPercent": 100 },
+  { "ingredientId": "whisky", "fillPercent": 100 },
+  { "ingredientId": "angostura", "fillPercent": 100 },
+  { "ingredientId": "orange-bitters", "fillPercent": 100 },
+  { "ingredientId": "peychauds", "fillPercent": 100 }
+]

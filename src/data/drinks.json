@@ -1,0 +1,327 @@
+[
+  {
+    "id": "aegean-cloud",
+    "name": "Aegean Cloud",
+    "glass": "Lowball",
+    "method": "Shaken",
+    "description": "The Aegean Cloud is a silky, citrus-forward cocktail that bridges Mediterranean flavors with classic cocktail technique. The unmistakable anise aroma of ouzo forms a striking contrast with the bright sweetness of limoncello and fresh lemon juice, while egg white adds a velvety texture and soft foam. Finished with a light splash of sparkling water, the drink feels airy and refreshing despite its bold flavor profile. Garnished with an orange twist, the Aegean Cloud is both playful and refined—an elegant sour-style cocktail with a distinctly coastal character.",
+    "image": "https://cdn.diffordsguide.com/cocktail/JRJewO/square/0/512x512.webp?v=1737701571",
+    "favorite": true,
+    "tags": [
+      "Bright",
+      "Smooth",
+      "Citrus",
+      "Aromatic"
+    ],
+    "ingredients": [
+      {
+        "id": "ouzo",
+        "amount": "2oz"
+      },
+      {
+        "id": "limoncello",
+        "amount": "2oz"
+      },
+      {
+        "id": "lemon-juice",
+        "amount": "1oz"
+      },
+      {
+        "id": "simple-syrup",
+        "amount": "0.5oz"
+      },
+      {
+        "id": "egg-white",
+        "amount": "1"
+      }
+    ],
+    "instructions": [
+      "Add ouzo, limoncello, lemon juice, simple syrup, and egg white to a shaker",
+      "Dry shake vigorously (no ice) for 15–20 seconds to emulsify the egg white",
+      "Add ice and shake again until well chilled",
+      "Double strain into a glass",
+      "Garnish with an orange twist."
+    ]
+  },
+  {
+    "id": "red-rooster",
+    "name": "Red Rooster",
+    "glass": "Highball",
+    "method": "Stirred",
+    "description": "The Old Fashioned is a timeless cocktail that highlights the rich, smooth flavor of bourbon. Sweetened with a touch of sugar and enhanced with aromatic bitters, it delivers a perfectly balanced drinking experience. Served over ice and garnished with an orange twist and cherry, this classic drink embodies elegance and simplicity. Ideal for sipping slowly, the Old Fashioned remains a favorite for cocktail enthusiasts seeking bold, refined flavors.",
+    "image": "https://cdn.diffordsguide.com/cocktail/AMwYZO/lifestyle/0/1024x.webp?v=1737701618",
+    "favorite": false,
+    "tags": [
+      "Sweet",
+      "Red"
+    ],
+    "ingredients": [
+      {
+        "id": "vodka",
+        "amount": "6cl"
+      },
+      {
+        "id": "orange-juice",
+        "amount": "6cl"
+      },
+      {
+        "id": "cranberry-juice",
+        "amount": "6cl"
+      }
+    ],
+    "instructions": [
+      "Stir and strain"
+    ]
+  },
+  {
+    "id": "old-fashioned",
+    "name": "Old Fashioned",
+    "glass": "Lowball",
+    "method": "Stirred",
+    "description": "The Old Fashioned is a timeless cocktail that highlights the rich, smooth flavor of bourbon. Sweetened with a touch of sugar and enhanced with aromatic bitters, it delivers a perfectly balanced drinking experience. Served over ice and garnished with an orange twist and cherry, this classic drink embodies elegance and simplicity. Ideal for sipping slowly, the Old Fashioned remains a favorite for cocktail enthusiasts seeking bold, refined flavors.",
+    "image": "https://cdn.diffordsguide.com/cocktail/O58XVr/square/0/512x512.webp?v=1737701589",
+    "favorite": true,
+    "tags": [
+      "Classic",
+      "Bold",
+      "Aromatic"
+    ],
+    "ingredients": [
+      {
+        "id": "bourbon",
+        "amount": "6cl"
+      },
+      {
+        "id": "simple-syrup",
+        "amount": "2 barspoons"
+      },
+      {
+        "id": "angostura",
+        "amount": "2 dashes"
+      },
+      {
+        "id": "orange-bitters",
+        "amount": "2 dash"
+      }
+    ],
+    "instructions": [
+      "Stir gently over ice",
+      "Garnish with orange peel",
+      "Note: If you don't have orange bitters, use 4 dashes of Angostura Bitters instead."
+    ]
+  },
+  {
+    "id": "margarita",
+    "name": "Margarita",
+    "glass": "Coupe",
+    "method": "Shaken",
+    "description": null,
+    "image": null,
+    "favorite": false,
+    "tags": [],
+    "ingredients": [
+      {
+        "id": "tequila",
+        "amount": "50ml"
+      },
+      {
+        "id": "cointreau",
+        "amount": "20ml"
+      },
+      {
+        "id": "lime-juice",
+        "amount": "20ml"
+      }
+    ],
+    "instructions": [
+      "Shake all ingredients with ice",
+      "Strain into a salt-rimmed coupe"
+    ]
+  },
+  {
+    "id": "whisky-sour",
+    "name": "Whisky Sour",
+    "glass": "Rocks",
+    "method": "Shaken",
+    "description": null,
+    "image": null,
+    "favorite": false,
+    "tags": [],
+    "ingredients": [
+      {
+        "id": "whisky",
+        "amount": "50ml"
+      },
+      {
+        "id": "lime-juice",
+        "amount": "25ml"
+      },
+      {
+        "id": "simple-syrup",
+        "amount": "15ml"
+      },
+      {
+        "id": "angostura",
+        "amount": "2 dashes"
+      }
+    ],
+    "instructions": [
+      "Shake hard with ice",
+      "Strain over fresh ice",
+      "Dash bitters on top"
+    ]
+  },
+  {
+    "id": "blue-lagoon",
+    "name": "Blue Lagoon",
+    "glass": "Highball",
+    "method": "Built",
+    "description": null,
+    "image": null,
+    "favorite": false,
+    "tags": [],
+    "ingredients": [
+      {
+        "id": "vodka",
+        "amount": "40ml"
+      },
+      {
+        "id": "blue-curacao",
+        "amount": "20ml"
+      },
+      {
+        "id": "soda-water",
+        "amount": "top"
+      }
+    ],
+    "instructions": [
+      "Build over ice in a highball",
+      "Top with soda water",
+      "Stir gently"
+    ]
+  },
+  {
+    "id": "b52-shot",
+    "name": "B-52",
+    "glass": "Shot",
+    "method": "Layered",
+    "description": null,
+    "image": null,
+    "favorite": false,
+    "tags": [],
+    "ingredients": [
+      {
+        "id": "kahlua",
+        "amount": "15ml"
+      },
+      {
+        "id": "baileys",
+        "amount": "15ml"
+      },
+      {
+        "id": "triple-sec",
+        "amount": "15ml"
+      }
+    ],
+    "instructions": [
+      "Layer Kahlúa first",
+      "Float Baileys over the back of a spoon",
+      "Float triple sec last"
+    ]
+  },
+  {
+    "id": "tequila-sunrise",
+    "name": "Tequila Sunrise",
+    "glass": "Highball",
+    "method": "Built",
+    "description": null,
+    "image": null,
+    "favorite": false,
+    "tags": [],
+    "ingredients": [
+      {
+        "id": "tequila",
+        "amount": "50ml"
+      },
+      {
+        "id": "grenadine",
+        "amount": "15ml"
+      },
+      {
+        "id": "soda-water",
+        "amount": "top"
+      }
+    ],
+    "instructions": [
+      "Build tequila over ice",
+      "Top with soda",
+      "Slowly pour grenadine so it sinks and settles"
+    ]
+  },
+  {
+    "id": "sazerac",
+    "name": "Sazerac",
+    "glass": "Rocks",
+    "method": "Stirred",
+    "description": null,
+    "image": null,
+    "favorite": false,
+    "tags": [],
+    "ingredients": [
+      {
+        "id": "whisky",
+        "amount": "60ml"
+      },
+      {
+        "id": "simple-syrup",
+        "amount": "5ml"
+      },
+      {
+        "id": "peychauds",
+        "amount": "3 dashes"
+      }
+    ],
+    "instructions": [
+      "Stir with ice",
+      "Strain into a chilled, absinthe-rinsed rocks glass",
+      "Twist a lemon peel over the top"
+    ]
+  },
+  {
+    "id": "mojito",
+    "name": "Mojito",
+    "glass": "Highball",
+    "method": "Muddled",
+    "description": null,
+    "image": null,
+    "favorite": false,
+    "tags": [],
+    "ingredients": [
+      {
+        "id": "rum",
+        "amount": "50ml"
+      },
+      {
+        "id": "lime-juice",
+        "amount": "25ml"
+      },
+      {
+        "id": "simple-syrup",
+        "amount": "15ml"
+      },
+      {
+        "id": "mint",
+        "amount": "8 leaves"
+      },
+      {
+        "id": "soda-water",
+        "amount": "top"
+      }
+    ],
+    "instructions": [
+      "Muddle mint gently with syrup and lime",
+      "Add rum and ice, churn",
+      "Top with soda water"
+    ]
+  }
+]

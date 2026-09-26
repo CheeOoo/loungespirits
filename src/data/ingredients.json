@@ -1,0 +1,191 @@
+[
+  {
+    "id": "baileys",
+    "name": "Baileys",
+    "category": "liqueur",
+    "description": "Irish cream liqueur blending whiskey, cream, and cocoa for a smooth, sweet finish.",
+    "unit": "ml"
+  },
+  {
+    "id": "kahlua",
+    "name": "Kahlúa",
+    "category": "liqueur",
+    "description": "Coffee liqueur with rich, roasted sweetness and a hint of rum-like depth.",
+    "unit": "ml"
+  },
+  {
+    "id": "vodka",
+    "name": "Vodka",
+    "category": "spirit",
+    "description": "Neutral, clean spirit with little flavor of its own, ideal as a versatile mixing base.",
+    "unit": "ml"
+  },
+  {
+    "id": "tequila",
+    "name": "Tequila",
+    "category": "spirit",
+    "description": "Agave spirit with earthy, peppery notes and a bright, slightly sweet finish.",
+    "unit": "ml"
+  },
+  {
+    "id": "lime-juice",
+    "name": "Lime Juice",
+    "category": "mixer",
+    "description": "Tart, tangy citrus juice that adds brightness and acidity to sours and highballs.",
+    "unit": "ml"
+  },
+  {
+    "id": "simple-syrup",
+    "name": "Simple Syrup",
+    "category": "mixer",
+    "description": "Equal-parts sugar and water, used to sweeten and balance cocktails smoothly.",
+    "unit": "ml"
+  },
+  {
+    "id": "grenadine",
+    "name": "Grenadine",
+    "category": "mixer",
+    "description": "Sweet, tart pomegranate syrup prized for its deep red color and fruity flavor.",
+    "unit": "ml"
+  },
+  {
+    "id": "blue-curacao",
+    "name": "Blue Curaçao",
+    "category": "liqueur",
+    "description": "Orange-flavored liqueur dyed vivid blue, sweet with a citrus peel edge.",
+    "unit": "ml"
+  },
+  {
+    "id": "cointreau",
+    "name": "Cointreau",
+    "category": "liqueur",
+    "description": "Premium triple sec with a clean, bittersweet orange flavor and smooth finish.",
+    "unit": "ml"
+  },
+  {
+    "id": "whisky",
+    "name": "Johnnie Walker Red Label",
+    "category": "spirit",
+    "description": "Blended Scotch whisky, smooth and smoky with light caramel and grain notes.",
+    "unit": "ml"
+  },
+  {
+    "id": "angostura",
+    "name": "Angostura Bitters",
+    "category": "bitters",
+    "description": "Concentrated aromatic bitters with clove, cinnamon, and gentian; a dash flavors deeply.",
+    "unit": "ml"
+  },
+  {
+    "id": "orange-bitters",
+    "name": "Orange Bitters",
+    "category": "bitters",
+    "description": "Aromatic bitters with bright citrus peel notes, used to add depth and balance.",
+    "unit": "ml"
+  },
+  {
+    "id": "peychauds",
+    "name": "Peychaud's Bitters",
+    "category": "bitters",
+    "description": "Anise- and mint-tinged aromatic bitters with a bright red hue, a Sazerac staple.",
+    "unit": "ml"
+  },
+  {
+    "id": "soda-water",
+    "name": "Soda Water",
+    "category": "mixer",
+    "description": "Plain carbonated water, used to lighten and add fizz without extra flavor.",
+    "unit": "ml"
+  },
+  {
+    "id": "triple-sec",
+    "name": "Triple Sec",
+    "category": "liqueur",
+    "description": "Clear orange liqueur, sweet and citrus-forward, lighter than Cointreau.",
+    "unit": "ml"
+  },
+  {
+    "id": "rum",
+    "name": "White Rum",
+    "category": "spirit",
+    "description": "Light, clean sugarcane spirit with subtle sweetness, ideal for tropical cocktails.",
+    "unit": "ml"
+  },
+  {
+    "id": "mint",
+    "name": "Mint",
+    "category": "garnish",
+    "description": "Fresh, cooling herb with a bright aroma, muddled or used as garnish.",
+    "unit": "count"
+  },
+  {
+    "id": "bourbon",
+    "name": "Bourbon",
+    "category": "spirit",
+    "description": "American whiskey, sweet and full-bodied with vanilla, caramel, and oak notes.",
+    "unit": "ml"
+  },
+  {
+    "id": "campari",
+    "name": "Campari",
+    "category": "liqueur",
+    "description": "Bright red Italian bitter liqueur with bold, bittersweet herbal and citrus flavor.",
+    "unit": "ml"
+  },
+  {
+    "id": "cranberry-juice",
+    "name": "Cranberry Juice",
+    "category": "mixer",
+    "description": "Tart, slightly sweet red juice, adds color and tang to mixed drinks.",
+    "unit": "ml"
+  },
+  {
+    "id": "egg-white",
+    "name": "Egg White",
+    "category": "other",
+    "description": "Adds silky texture and a soft foam head when shaken into sours.",
+    "unit": "count"
+  },
+  {
+    "id": "gin",
+    "name": "Gin",
+    "category": "spirit",
+    "description": "Clear, aromatic spirit infused with botanicals like juniper, providing a crisp, herbal flavor.",
+    "unit": "ml"
+  },
+  {
+    "id": "lemon-juice",
+    "name": "Lemon Juice",
+    "category": "mixer",
+    "description": "Bright, sharp citrus juice that balances sweetness with fresh acidity.",
+    "unit": "ml"
+  },
+  {
+    "id": "limoncello",
+    "name": "Limoncello",
+    "category": "liqueur",
+    "description": "Italian lemon liqueur, intensely citrusy and sweet with a vibrant yellow hue.",
+    "unit": "ml"
+  },
+  {
+    "id": "orange-juice",
+    "name": "Orange Juice",
+    "category": "mixer",
+    "description": "Sweet, tangy citrus juice, a classic mixer for bright, fruity cocktails.",
+    "unit": "ml"
+  },
+  {
+    "id": "ouzo",
+    "name": "Ouzo",
+    "category": "spirit",
+    "description": "Greek anise-flavored spirit, turns milky when mixed with water or ice.",
+    "unit": "ml"
+  },
+  {
+    "id": "sweet-vermouth",
+    "name": "Sweet Vermouth",
+    "category": "liqueur",
+    "description": "Fortified, herb-infused wine with rich sweetness, key in stirred classics.",
+    "unit": "ml"
+  }
+]
