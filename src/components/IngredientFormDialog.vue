@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input'
 import { Select, SelectTrigger, SelectContent, SelectItem, SelectValue } from '@/components/ui/select'
 import { Trash2 } from 'lucide-vue-next'
 import { useDrinks } from '@/composables/useDrinks'
+import { UNIT_TYPES } from '@/lib/units'
 
 const props = defineProps({
   editingIngredient: { type: Object, default: null },
@@ -15,10 +16,6 @@ const open = defineModel('open', { type: Boolean, default: false })
 const { addIngredient, updateIngredient, removeIngredient } = useDrinks()
 
 const CATEGORY_OPTIONS = ['spirit', 'liqueur', 'mixer', 'bitters', 'garnish', 'other']
-const UNIT_OPTIONS = [
-  { value: 'ml', label: 'Millilitres (measured, shows a fill level)' },
-  { value: 'count', label: 'Count (discrete items, e.g. limes, mint)' },
-]
 
 const isEditing = computed(() => !!props.editingIngredient)
 
@@ -129,13 +126,13 @@ async function handleDelete() {
               <SelectValue placeholder="Select measurement" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem v-for="u in UNIT_OPTIONS" :key="u.value" :value="u.value">
+              <SelectItem v-for="u in UNIT_TYPES" :key="u.value" :value="u.value">
                 {{ u.label }}
               </SelectItem>
             </SelectContent>
           </Select>
           <p class="text-xs text-muted-foreground mt-1.5">
-            Measured ingredients get a fill-level slider in your cabinet; count ingredients get a plain number.
+            Amounts on this ingredient will be entered as a plain number in this unit — no need to type "ml" or "dashes" yourself.
           </p>
         </div>
 

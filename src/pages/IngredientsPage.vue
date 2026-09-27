@@ -39,7 +39,7 @@ function openEdit(ing) {
 
     <div v-else v-for="(items, category) in ingredientsByCategory" :key="category" class="mb-8">
       <h3 class="text-sm font-medium text-muted-foreground capitalize mb-3">{{ category }}</h3>
-      <div class="grid sm:grid-cols-2 gap-3">
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
         <button
           v-for="ing in items"
           :key="ing.id"

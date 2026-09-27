@@ -2,10 +2,12 @@
 import { Star } from 'lucide-vue-next'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent } from '@/components/ui/card'
+import { getUnitType } from '@/lib/units'
 
 const props = defineProps({
   drink: { type: Object, required: true },
   ingName: { type: Function, required: true },
+  ingUnit: { type: Function, required: true },
   // Cabinet page only: show ingredient list, with red highlight for missing ones
   showIngredients: { type: Boolean, default: false },
 })
@@ -14,6 +16,11 @@ const emit = defineEmits(['open', 'toggleFavorite'])
 function onStarClick(e) {
   e.stopPropagation()
   emit('toggleFavorite', props.drink.id)
+}
+
+function formatAmount(ing) {
+  const unitType = getUnitType(props.ingUnit(ing.id))
+  return unitType.hasAmount ? `${ing.amount}${unitType.abbrev}` : unitType.abbrev
 }
 </script>
 
@@ -55,8 +62,9 @@ function onStarClick(e) {
         {{ drink.description }}
       </p>
 
-      <p class="text-xs text-muted-foreground/80 mt-auto pt-1">
-        {{ drink.glass }}<template v-if="drink.method"> · {{ drink.method }}</template>
+      <p class="flex items-center justify-between gap-2 text-xs text-muted-foreground/80 mt-auto pt-1">
+        <span>{{ drink.glass }}<template v-if="drink.method"> · {{ drink.method }}</template></span>
+        <span v-if="drink.garnishId" class="shrink-0">{{ ingName(drink.garnishId) }}</span>
       </p>
 
       <template v-if="showIngredients">
@@ -67,7 +75,7 @@ function onStarClick(e) {
               :key="ing.id"
               :class="drink.missing?.includes(ing.id) ? 'text-destructive' : 'text-muted-foreground'"
             >
-              {{ ing.amount }} {{ ingName(ing.id) }}
+              {{ formatAmount(ing) }} {{ ingName(ing.id) }}
             </li>
           </ul>
         </div>

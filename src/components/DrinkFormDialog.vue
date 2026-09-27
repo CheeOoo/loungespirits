@@ -8,6 +8,7 @@ import { Badge } from '@/components/ui/badge'
 import { Select, SelectTrigger, SelectContent, SelectItem, SelectValue } from '@/components/ui/select'
 import IngredientCombobox from '@/components/IngredientCombobox.vue'
 import { useDrinks } from '@/composables/useDrinks'
+import { getUnitType } from '@/lib/units'
 
 const props = defineProps({
   // pass an existing drink to edit it; omit/null to add a new one
@@ -15,7 +16,7 @@ const props = defineProps({
 })
 const open = defineModel('open', { type: Boolean, default: false })
 
-const { ingredients, drinks, allTags, addDrink, updateDrink, removeDrink } = useDrinks()
+const { ingredients, drinks, allTags, addDrink, updateDrink, removeDrink, ingUnit, ingredientsByCategory } = useDrinks()
 
 const GLASS_OPTIONS = ['Coupe', 'Highball', 'Lowball', 'Rocks', 'Shot', 'Martini', 'Collins']
 const METHOD_OPTIONS = ['Shaken', 'Stirred', 'Built', 'Muddled', 'Layered', 'Blended']
@@ -36,6 +37,7 @@ const emptyForm = () => ({
   image: '',
   description: '',
   tags: [],
+  garnishId: '',
   ingredientRows: [{ ingredientId: '', amount: '' }],
   instructions: [''],
 })
@@ -56,6 +58,7 @@ watch(
         image: d.image || '',
         description: d.description || '',
         tags: [...(d.tags || [])],
+        garnishId: d.garnishId || '',
         ingredientRows: d.ingredients?.length
           ? d.ingredients.map((i) => ({ ingredientId: i.id, amount: i.amount }))
           : [{ ingredientId: '', amount: '' }],
@@ -81,6 +84,10 @@ function addNewTag() {
     form.value.tags.push(t)
   }
   newTagInput.value = ''
+}
+
+function rowUnitType(row) {
+  return row.ingredientId ? getUnitType(ingUnit(row.ingredientId)) : null
 }
 
 function addIngredientRow() {
@@ -111,8 +118,21 @@ function validate() {
   const errs = []
   if (!form.value.name.trim()) errs.push('Name is required.')
   if (!form.value.glass) errs.push('Glass is required.')
-  const validRows = form.value.ingredientRows.filter((r) => r.ingredientId && r.amount.trim())
-  if (validRows.length === 0) errs.push('At least one ingredient with an amount is required.')
+
+  const rowsWithIngredient = form.value.ingredientRows.filter((r) => r.ingredientId)
+  if (rowsWithIngredient.length === 0) {
+    errs.push('At least one ingredient is required.')
+  } else {
+    for (const row of rowsWithIngredient) {
+      const unitType = rowUnitType(row)
+      if (unitType.hasAmount && !row.amount.trim()) {
+        errs.push(`Enter an amount for ${ingredients.find((i) => i.id === row.ingredientId)?.name || 'an ingredient'}.`)
+      } else if (unitType.hasAmount && isNaN(Number(row.amount))) {
+        errs.push(`Amount for ${ingredients.find((i) => i.id === row.ingredientId)?.name || 'an ingredient'} must be a number.`)
+      }
+    }
+  }
+
   const validSteps = form.value.instructions.filter((s) => s.trim())
   if (validSteps.length === 0) errs.push('At least one instruction step is required.')
   errors.value = errs
@@ -135,8 +155,9 @@ async function handleSave() {
     description: form.value.description.trim() || null,
     favorite: isEditing.value ? props.editingDrink.favorite : false,
     tags: form.value.tags,
+    garnishId: form.value.garnishId || null,
     ingredients: form.value.ingredientRows
-      .filter((r) => r.ingredientId && r.amount.trim())
+      .filter((r) => r.ingredientId)
       .map((r) => ({ id: r.ingredientId, amount: r.amount.trim() })),
     instructions: form.value.instructions.map((s) => s.trim()).filter(Boolean),
   }
@@ -274,6 +295,20 @@ async function handleDelete() {
           </div>
         </div>
 
+        <!-- Garnish -->
+        <div>
+          <label class="text-sm font-medium mb-1 block">Garnish</label>
+          <IngredientCombobox
+            v-model="form.garnishId"
+            :ingredients="ingredientsByCategory.garnish || []"
+            clearable
+            placeholder="No garnish"
+          />
+          <p v-if="!(ingredientsByCategory.garnish || []).length" class="text-xs text-muted-foreground mt-1.5">
+            No garnish-category ingredients yet — add one on the Ingredients page first.
+          </p>
+        </div>
+
         <!-- Ingredients -->
         <div>
           <label class="text-sm font-medium mb-1 block">Ingredients</label>
@@ -286,7 +321,25 @@ async function handleDelete() {
               <div class="flex-1">
                 <IngredientCombobox v-model="row.ingredientId" :ingredients="ingredients" />
               </div>
-              <Input v-model="row.amount" placeholder="e.g. 50ml" class="w-28 shrink-0" />
+              <div v-if="row.ingredientId && !rowUnitType(row).hasAmount" class="w-28 shrink-0 flex items-center">
+                <Badge variant="outline" class="text-xs">top up</Badge>
+              </div>
+              <div v-else class="w-28 shrink-0 relative">
+                <Input
+                  v-model="row.amount"
+                  type="number"
+                  min="0"
+                  step="any"
+                  placeholder="Amount"
+                  class="pr-10"
+                />
+                <span
+                  v-if="row.ingredientId"
+                  class="absolute right-2.5 top-1/2 -translate-y-1/2 text-xs text-muted-foreground pointer-events-none"
+                >
+                  {{ rowUnitType(row).abbrev }}
+                </span>
+              </div>
               <Button
                 type="button"
                 variant="ghost"

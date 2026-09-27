@@ -125,6 +125,7 @@ function rowToDrink(row) {
     tags: row.tags,
     ingredients: row.ingredients,
     instructions: row.instructions,
+    garnishId: row.garnish_id,
   }
 }
 
@@ -137,8 +138,8 @@ app.post('/api/drinks', async (req, res) => {
   const d = req.body
   try {
     await pool.query(
-      `INSERT INTO drinks (id, name, glass, method, image, description, favorite, tags, ingredients, instructions)
-       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)`,
+      `INSERT INTO drinks (id, name, glass, method, image, description, favorite, tags, ingredients, instructions, garnish_id)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)`,
       [
         d.id,
         d.name,
@@ -150,6 +151,7 @@ app.post('/api/drinks', async (req, res) => {
         JSON.stringify(d.tags || []),
         JSON.stringify(d.ingredients || []),
         JSON.stringify(d.instructions || []),
+        d.garnishId || null,
       ],
     )
     res.status(201).json(d)
@@ -169,7 +171,7 @@ app.put('/api/drinks/:id', async (req, res) => {
   const { rows } = await pool.query(
     `UPDATE drinks SET
        name = $2, glass = $3, method = $4, image = $5, description = $6,
-       favorite = $7, tags = $8, ingredients = $9, instructions = $10
+       favorite = $7, tags = $8, ingredients = $9, instructions = $10, garnish_id = $11
      WHERE id = $1
      RETURNING *`,
     [
@@ -183,6 +185,7 @@ app.put('/api/drinks/:id', async (req, res) => {
       JSON.stringify(d.tags || []),
       JSON.stringify(d.ingredients || []),
       JSON.stringify(d.instructions || []),
+      d.garnishId || null,
     ],
   )
   if (rows.length === 0) {

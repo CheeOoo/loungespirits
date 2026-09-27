@@ -17,6 +17,7 @@ const {
   allTags,
   toggleFavorite,
   ingName,
+  ingUnit,
   ingredientsByCategory,
   filteredDrinks,
   loading,
@@ -54,12 +55,13 @@ function openDrink(drink) {
       No drinks match your search or filters.
     </p>
 
-    <div v-if="!loading && !loadError" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 items-stretch">
+    <div v-if="!loading && !loadError" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 items-stretch">
       <DrinkCard
         v-for="drink in filteredDrinks"
         :key="drink.id"
         :drink="drink"
         :ing-name="ingName"
+        :ing-unit="ingUnit"
         :show-ingredients="false"
         @open="openDrink"
         @toggle-favorite="toggleFavorite"
@@ -70,6 +72,7 @@ function openDrink(drink) {
       v-model:open="dialogOpen"
       :drink="selectedDrink"
       :ing-name="ingName"
+      :ing-unit="ingUnit"
       :show-missing="false"
     />
   </main>

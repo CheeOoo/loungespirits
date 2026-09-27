@@ -5,10 +5,12 @@ import { Dialog, DialogContent, DialogTitle, DialogDescription } from '@/compone
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import DrinkFormDialog from '@/components/DrinkFormDialog.vue'
+import { getUnitType } from '@/lib/units'
 
 const props = defineProps({
   drink: { type: Object, default: null },
   ingName: { type: Function, required: true },
+  ingUnit: { type: Function, required: true },
   showMissing: { type: Boolean, default: false },
 })
 const open = defineModel('open', { type: Boolean, default: false })
@@ -19,11 +21,16 @@ function startEdit() {
   open.value = false
   editOpen.value = true
 }
+
+function formatAmount(ing) {
+  const unitType = getUnitType(props.ingUnit(ing.id))
+  return unitType.hasAmount ? `${ing.amount}${unitType.abbrev}` : unitType.abbrev
+}
 </script>
 
 <template>
   <Dialog v-model:open="open">
-    <DialogContent v-if="drink" class="p-0 gap-0">
+    <DialogContent v-if="drink" class="p-0 gap-0 grid-cols-1 auto-rows-min">
       <div class="relative aspect-video bg-muted overflow-hidden rounded-t-lg">
         <img
           :src="drink.image || '/img/sample.png'"
@@ -43,7 +50,10 @@ function startEdit() {
       <div class="p-6">
         <div class="min-h-14">
           <DialogTitle class="line-clamp-2">{{ drink.name }}</DialogTitle>
-          <DialogDescription>{{ drink.glass }}<template v-if="drink.method"> · {{ drink.method }}</template></DialogDescription>
+          <DialogDescription class="flex items-center justify-between gap-2">
+            <span>{{ drink.glass }}<template v-if="drink.method"> · {{ drink.method }}</template></span>
+            <span v-if="drink.garnishId" class="shrink-0">{{ ingName(drink.garnishId) }}</span>
+          </DialogDescription>
         </div>
 
         <div v-if="drink.tags?.length" class="flex flex-wrap gap-1 mt-3">
@@ -63,7 +73,7 @@ function startEdit() {
             :key="ing.id"
             :class="showMissing && drink.missing?.includes(ing.id) ? 'text-destructive' : 'text-muted-foreground'"
           >
-            {{ ing.amount }} {{ ingName(ing.id) }}
+            {{ formatAmount(ing) }} {{ ingName(ing.id) }}
           </li>
         </ul>
 

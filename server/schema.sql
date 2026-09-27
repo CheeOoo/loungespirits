@@ -6,8 +6,10 @@ CREATE TABLE IF NOT EXISTS ingredients (
   name TEXT NOT NULL,
   category TEXT NOT NULL,
   description TEXT,
-  -- 'ml', 'cl', 'oz' = measured (poured from a container, fill level makes sense)
-  -- 'count' = discrete items (limes, mint, eggs) — tracked by quantity, not a fill percentage
+  -- 'ml' = measured by volume (fill level makes sense in the cabinet)
+  -- 'count' = discrete items (limes, mint, eggs) — tracked by quantity
+  -- 'dashes', 'barspoons' = small measured amounts, still a real number
+  -- 'top' = "fill to top" — no number entered, e.g. soda water
   unit TEXT NOT NULL DEFAULT 'ml'
 );
 
@@ -21,7 +23,8 @@ CREATE TABLE IF NOT EXISTS drinks (
   favorite BOOLEAN NOT NULL DEFAULT false,
   tags JSONB NOT NULL DEFAULT '[]',
   ingredients JSONB NOT NULL DEFAULT '[]',
-  instructions JSONB NOT NULL DEFAULT '[]'
+  instructions JSONB NOT NULL DEFAULT '[]',
+  garnish_id TEXT REFERENCES ingredients(id) ON DELETE SET NULL
 );
 
 -- One row per ingredient currently in the cabinet.

@@ -8,6 +8,8 @@ import { cn } from '@/lib/utils'
 const props = defineProps({
   ingredients: { type: Array, required: true },
   modelValue: { type: String, default: '' }, // selected ingredient id
+  clearable: { type: Boolean, default: false },
+  placeholder: { type: String, default: 'Select an ingredient...' },
 })
 const emit = defineEmits(['update:modelValue'])
 
@@ -31,6 +33,12 @@ function select(ing) {
   open.value = false
   query.value = ''
 }
+
+function clear() {
+  emit('update:modelValue', '')
+  open.value = false
+  query.value = ''
+}
 </script>
 
 <template>
@@ -43,7 +51,7 @@ function select(ing) {
           !selected && 'text-muted-foreground',
         )"
       >
-        <span class="truncate">{{ selected ? selected.name : 'Select an ingredient...' }}</span>
+        <span class="truncate">{{ selected ? selected.name : placeholder }}</span>
         <ChevronsUpDown class="size-4 shrink-0 opacity-50" />
       </button>
     </PopoverTrigger>
@@ -58,6 +66,15 @@ function select(ing) {
         />
       </div>
       <div class="max-h-72 overflow-y-auto p-1">
+        <button
+          v-if="clearable"
+          type="button"
+          @click="clear"
+          class="w-full flex items-center gap-2 rounded-sm px-2 py-2 text-left text-sm text-muted-foreground hover:bg-accent hover:text-accent-foreground"
+        >
+          <Check class="size-4 shrink-0" :class="!modelValue ? 'opacity-100' : 'opacity-0'" />
+          None
+        </button>
         <p v-if="filtered.length === 0" class="py-4 text-center text-sm text-muted-foreground">
           No ingredient found.
         </p>

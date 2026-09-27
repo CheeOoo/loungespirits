@@ -43,6 +43,21 @@ have/don't-have list into cabinet entries at 100% fill. It leaves the old
 `bar_inventory` table in place (unused) so you can double-check the migration before
 dropping it yourself.
 
+**Already ran migrate_001, need the garnish field too?**
+```bash
+psql "$DATABASE_URL" -f server/migrate_002_garnish.sql
+```
+Adds a `garnish_id` column to `drinks`. Existing drinks just get `null` (no garnish)
+until you set one through the edit form.
+
+**Note on ingredient units:** the unit vocabulary expanded from just `ml`/`count` to
+`ml`, `count`, `dashes`, `barspoons`, `top`. Ingredients you already created keep
+whatever unit they had — go through the Ingredients page and update any that should
+now be `dashes`, `barspoons`, or `top` (e.g. bitters, soda water). Amount fields on
+drinks are now plain numbers (the unit comes from the ingredient automatically), so
+any drink with an old free-text amount like "2 dashes" will need its amount
+re-entered as just `2` once the ingredient's unit is set correctly.
+
 ### 2. Run both servers
 
 ```bash

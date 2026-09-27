@@ -22,6 +22,7 @@ const {
   allTags,
   toggleFavorite,
   ingName,
+  ingUnit,
   ingredientsByCategory,
   cabinetDrinks,
   cabinetEntries,
@@ -57,7 +58,7 @@ function openDrink(drink) {
         Nothing in your cabinet yet. Add what you've got with the plus button above.
       </p>
 
-      <div class="space-y-2">
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-1 gap-2">
         <CabinetEntryRow v-for="entry in cabinetEntries" :key="entry.id" :entry="entry" />
       </div>
     </aside>
@@ -89,12 +90,13 @@ function openDrink(drink) {
         Nothing matches. Try adding a few more ingredients, or turn off "only show drinks I can make."
       </p>
 
-      <div v-if="!loading && !loadError" class="grid sm:grid-cols-2 xl:grid-cols-3 gap-5 items-stretch">
+      <div v-if="!loading && !loadError" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5 items-stretch">
         <DrinkCard
           v-for="drink in cabinetDrinks"
           :key="drink.id"
           :drink="drink"
           :ing-name="ingName"
+          :ing-unit="ingUnit"
           :show-ingredients="true"
           @open="openDrink"
           @toggle-favorite="toggleFavorite"
@@ -105,6 +107,7 @@ function openDrink(drink) {
         v-model:open="dialogOpen"
         :drink="selectedDrink"
         :ing-name="ingName"
+        :ing-unit="ingUnit"
         :show-missing="true"
       />
     </main>
