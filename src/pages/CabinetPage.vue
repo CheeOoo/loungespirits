@@ -28,6 +28,8 @@ const {
   cabinetEntries,
   showOnlyMakeable,
   toggleShowOnlyMakeable,
+  includeSubstitutes,
+  toggleIncludeSubstitutes,
   loading,
   loadError,
 } = useDrinks()
@@ -79,10 +81,23 @@ function openDrink(drink) {
         @clear-tag-filters="clearTagFilters"
       />
 
-      <label class="flex items-center gap-2 mb-6 text-sm cursor-pointer w-fit">
-        <Checkbox :model-value="showOnlyMakeable" @update:model-value="toggleShowOnlyMakeable" />
-        Only show drinks I can make
-      </label>
+      <div class="flex flex-wrap items-center gap-x-5 gap-y-2 mb-6">
+        <label class="flex items-center gap-2 text-sm cursor-pointer w-fit">
+          <Checkbox :model-value="showOnlyMakeable" @update:model-value="toggleShowOnlyMakeable" />
+          Only show drinks I can make
+        </label>
+        <label
+          class="flex items-center gap-2 text-sm cursor-pointer w-fit transition-opacity"
+          :class="{ 'opacity-40 pointer-events-none': !showOnlyMakeable }"
+        >
+          <Checkbox
+            :model-value="includeSubstitutes"
+            :disabled="!showOnlyMakeable"
+            @update:model-value="toggleIncludeSubstitutes"
+          />
+          Include drinks makeable with a substitute
+        </label>
+      </div>
 
       <p v-if="loadError" class="text-sm text-destructive">{{ loadError }}</p>
       <p v-else-if="loading" class="text-sm text-muted-foreground">Loading drinks...</p>

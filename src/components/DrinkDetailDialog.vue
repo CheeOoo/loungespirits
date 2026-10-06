@@ -1,6 +1,6 @@
 <script setup>
-import { ref } from 'vue'
-import { Pencil } from 'lucide-vue-next'
+import { ref, computed } from 'vue'
+import { Pencil, Shuffle } from 'lucide-vue-next'
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from '@/components/ui/dialog'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -26,6 +26,12 @@ function formatAmount(ing) {
   const unitType = getUnitType(props.ingUnit(ing.id))
   return unitType.hasAmount ? `${ing.amount}${unitType.abbrev}` : unitType.abbrev
 }
+
+function statusFor(ing) {
+  return props.drink?.statusById?.[ing.id]?.status
+}
+
+const usesSubstitute = computed(() => props.showMissing && props.drink?.substitutedCount > 0)
 </script>
 
 <template>
@@ -67,13 +73,33 @@ function formatAmount(ing) {
         </p>
 
         <p class="text-sm font-medium mt-5 mb-2">Ingredients</p>
+
+        <div
+          v-if="usesSubstitute"
+          class="flex items-start gap-2 text-xs text-amber-700 dark:text-amber-400 bg-amber-500/10 border border-amber-500/20 rounded-md px-3 py-2 mb-3"
+        >
+          <Shuffle class="size-3.5 shrink-0 mt-0.5" />
+          <span>This version swaps in a possible substitute for something you're missing — it may not taste exactly like the original recipe.</span>
+        </div>
+
         <ul class="text-sm space-y-1 mb-5">
           <li
             v-for="ing in drink.ingredients"
             :key="ing.id"
-            :class="showMissing && drink.missing?.includes(ing.id) ? 'text-destructive' : 'text-muted-foreground'"
+            :class="{
+              'text-destructive': showMissing && statusFor(ing) === 'missing',
+              'text-amber-700 dark:text-amber-400': showMissing && statusFor(ing) === 'substitute',
+              'text-muted-foreground': !showMissing || statusFor(ing) === 'have' || !statusFor(ing),
+            }"
           >
-            {{ formatAmount(ing) }} {{ ingName(ing.id) }}
+            <template v-if="showMissing && statusFor(ing) === 'substitute'">
+              <span class="line-through opacity-60">{{ formatAmount(ing) }} {{ ingName(ing.id) }}</span>
+              → {{ ingName(drink.statusById[ing.id].substituteId) }}
+              <span class="text-[11px] opacity-80">(possible substitute)</span>
+            </template>
+            <template v-else>
+              {{ formatAmount(ing) }} {{ ingName(ing.id) }}
+            </template>
           </li>
         </ul>
 

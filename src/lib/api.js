@@ -37,6 +37,13 @@ export const api = {
   removeCabinetItem: (ingredientId) =>
     request(`/cabinet/${encodeURIComponent(ingredientId)}`, { method: 'DELETE' }),
 
+  getSubstitutes: () => request('/substitutes'),
+  setSubstitutes: (ingredientId, substituteIds) =>
+    request(`/substitutes/${encodeURIComponent(ingredientId)}`, {
+      method: 'PUT',
+      body: JSON.stringify({ substituteIds }),
+    }),
+
   getDrinks: () => request('/drinks'),
   createDrink: (drink) =>
     request('/drinks', { method: 'POST', body: JSON.stringify(drink) }),

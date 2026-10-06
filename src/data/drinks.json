@@ -16,19 +16,19 @@
     "ingredients": [
       {
         "id": "ouzo",
-        "amount": "2oz"
+        "amount": "2"
       },
       {
         "id": "limoncello",
-        "amount": "2oz"
+        "amount": "2"
       },
       {
         "id": "lemon-juice",
-        "amount": "1oz"
+        "amount": "1"
       },
       {
         "id": "simple-syrup",
-        "amount": "0.5oz"
+        "amount": "0.5"
       },
       {
         "id": "egg-white",
@@ -58,15 +58,15 @@
     "ingredients": [
       {
         "id": "vodka",
-        "amount": "6cl"
+        "amount": "6"
       },
       {
         "id": "orange-juice",
-        "amount": "6cl"
+        "amount": "6"
       },
       {
         "id": "cranberry-juice",
-        "amount": "6cl"
+        "amount": "6"
       }
     ],
     "instructions": [
@@ -89,19 +89,19 @@
     "ingredients": [
       {
         "id": "bourbon",
-        "amount": "6cl"
+        "amount": "6"
       },
       {
         "id": "simple-syrup",
-        "amount": "2 barspoons"
+        "amount": "2"
       },
       {
         "id": "angostura",
-        "amount": "2 dashes"
+        "amount": "2"
       },
       {
         "id": "orange-bitters",
-        "amount": "2 dash"
+        "amount": "2"
       }
     ],
     "instructions": [
@@ -122,15 +122,15 @@
     "ingredients": [
       {
         "id": "tequila",
-        "amount": "50ml"
+        "amount": "50"
       },
       {
         "id": "cointreau",
-        "amount": "20ml"
+        "amount": "20"
       },
       {
         "id": "lime-juice",
-        "amount": "20ml"
+        "amount": "20"
       }
     ],
     "instructions": [
@@ -150,19 +150,19 @@
     "ingredients": [
       {
         "id": "whisky",
-        "amount": "50ml"
+        "amount": "50"
       },
       {
         "id": "lime-juice",
-        "amount": "25ml"
+        "amount": "25"
       },
       {
         "id": "simple-syrup",
-        "amount": "15ml"
+        "amount": "15"
       },
       {
         "id": "angostura",
-        "amount": "2 dashes"
+        "amount": "2"
       }
     ],
     "instructions": [
@@ -183,11 +183,11 @@
     "ingredients": [
       {
         "id": "vodka",
-        "amount": "40ml"
+        "amount": "40"
       },
       {
         "id": "blue-curacao",
-        "amount": "20ml"
+        "amount": "20"
       },
       {
         "id": "soda-water",
@@ -212,15 +212,15 @@
     "ingredients": [
       {
         "id": "kahlua",
-        "amount": "15ml"
+        "amount": "15"
       },
       {
         "id": "baileys",
-        "amount": "15ml"
+        "amount": "15"
       },
       {
         "id": "triple-sec",
-        "amount": "15ml"
+        "amount": "15"
       }
     ],
     "instructions": [
@@ -241,11 +241,11 @@
     "ingredients": [
       {
         "id": "tequila",
-        "amount": "50ml"
+        "amount": "50"
       },
       {
         "id": "grenadine",
-        "amount": "15ml"
+        "amount": "15"
       },
       {
         "id": "soda-water",
@@ -270,15 +270,15 @@
     "ingredients": [
       {
         "id": "whisky",
-        "amount": "60ml"
+        "amount": "60"
       },
       {
         "id": "simple-syrup",
-        "amount": "5ml"
+        "amount": "5"
       },
       {
         "id": "peychauds",
-        "amount": "3 dashes"
+        "amount": "3"
       }
     ],
     "instructions": [
@@ -299,19 +299,19 @@
     "ingredients": [
       {
         "id": "rum",
-        "amount": "50ml"
+        "amount": "50"
       },
       {
         "id": "lime-juice",
-        "amount": "25ml"
+        "amount": "25"
       },
       {
         "id": "simple-syrup",
-        "amount": "15ml"
+        "amount": "15"
       },
       {
         "id": "mint",
-        "amount": "8 leaves"
+        "amount": "8"
       },
       {
         "id": "soda-water",

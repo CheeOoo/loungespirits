@@ -111,6 +111,58 @@ app.delete('/api/cabinet/:ingredientId', async (req, res) => {
   res.status(204).end()
 })
 
+// ---------- Ingredient substitutes (symmetric) ----------
+
+function orderPair(a, b) {
+  return a < b ? [a, b] : [b, a]
+}
+
+app.get('/api/substitutes', async (req, res) => {
+  const { rows } = await pool.query(
+    'SELECT ingredient_a_id, ingredient_b_id FROM ingredient_substitutes',
+  )
+  res.json(rows.map((r) => ({ a: r.ingredient_a_id, b: r.ingredient_b_id })))
+})
+
+// Replaces the full substitute set for one ingredient — simplest match for a
+// "pick which ingredients can stand in for this one" multi-select in the UI.
+// Since the relationship is symmetric, this can add or remove the OTHER side
+// of pairs that don't involve ingredientId at all (e.g. editing triple-sec's
+// substitutes can't touch a cointreau/orange-curacao pair), so it only ever
+// touches rows where ingredientId is one of the two members.
+app.put('/api/substitutes/:ingredientId', async (req, res) => {
+  const { ingredientId } = req.params
+  const substituteIds = Array.isArray(req.body.substituteIds) ? req.body.substituteIds : []
+  const client = await pool.connect()
+  try {
+    await client.query('BEGIN')
+    await client.query(
+      'DELETE FROM ingredient_substitutes WHERE ingredient_a_id = $1 OR ingredient_b_id = $1',
+      [ingredientId],
+    )
+    for (const otherId of substituteIds) {
+      if (otherId === ingredientId) continue
+      const [a, b] = orderPair(ingredientId, otherId)
+      await client.query(
+        `INSERT INTO ingredient_substitutes (ingredient_a_id, ingredient_b_id)
+         VALUES ($1, $2) ON CONFLICT DO NOTHING`,
+        [a, b],
+      )
+    }
+    await client.query('COMMIT')
+    const { rows } = await client.query(
+      'SELECT ingredient_a_id, ingredient_b_id FROM ingredient_substitutes',
+    )
+    res.json(rows.map((r) => ({ a: r.ingredient_a_id, b: r.ingredient_b_id })))
+  } catch (err) {
+    await client.query('ROLLBACK')
+    console.error(err)
+    res.status(500).json({ error: 'Failed to update substitutes.' })
+  } finally {
+    client.release()
+  }
+})
+
 // ---------- Drinks ----------
 
 function rowToDrink(row) {

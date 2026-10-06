@@ -35,3 +35,14 @@ CREATE TABLE IF NOT EXISTS cabinet_items (
   fill_percent INTEGER CHECK (fill_percent IN (0, 25, 50, 75, 100)),
   quantity INTEGER CHECK (quantity >= 0)
 );
+
+-- Symmetric "can stand in for" relationships between ingredients (e.g. Cointreau
+-- / Triple Sec). Each pair is stored once, ordered so ingredient_a_id is always
+-- the alphabetically-earlier id — the app enforces this ordering on write, so
+-- there's never a separate reversed row to query both directions against.
+CREATE TABLE IF NOT EXISTS ingredient_substitutes (
+  ingredient_a_id TEXT NOT NULL REFERENCES ingredients(id) ON DELETE CASCADE,
+  ingredient_b_id TEXT NOT NULL REFERENCES ingredients(id) ON DELETE CASCADE,
+  PRIMARY KEY (ingredient_a_id, ingredient_b_id),
+  CHECK (ingredient_a_id < ingredient_b_id)
+);

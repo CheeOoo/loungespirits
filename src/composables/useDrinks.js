@@ -6,6 +6,8 @@ const ingredients = ref([])
 const drinks = ref([])
 // Map<ingredientId, { fillPercent: number|null, quantity: number|null }>
 const cabinetItems = ref(new Map())
+// raw symmetric pairs as stored: [{ a: ingredientId, b: ingredientId }, ...]
+const substitutePairs = ref([])
 const loading = ref(true)
 const loadError = ref(null)
 
@@ -13,6 +15,9 @@ const search = ref('')
 const activeFilters = ref(new Set())
 const activeTagFilters = ref(new Set())
 const showOnlyMakeable = ref(false)
+// only meaningful when showOnlyMakeable is on: also count drinks makeable
+// by swapping in a substitute for an ingredient you don't have
+const includeSubstitutes = ref(false)
 
 let loadStarted = false
 
@@ -22,16 +27,18 @@ async function loadAll() {
   loading.value = true
   loadError.value = null
   try {
-    const [ing, dr, cab] = await Promise.all([
+    const [ing, dr, cab, subs] = await Promise.all([
       api.getIngredients(),
       api.getDrinks(),
       api.getCabinet(),
+      api.getSubstitutes(),
     ])
     ingredients.value = ing
     drinks.value = dr
     cabinetItems.value = new Map(
       cab.map((c) => [c.ingredientId, { fillPercent: c.fillPercent, quantity: c.quantity }]),
     )
+    substitutePairs.value = subs
   } catch (err) {
     console.error(err)
     loadError.value = 'Could not reach the server. Is the API running?'
@@ -45,6 +52,43 @@ export function useDrinks() {
 
   function toggleShowOnlyMakeable(value) {
     showOnlyMakeable.value = value
+  }
+
+  function toggleIncludeSubstitutes(value) {
+    includeSubstitutes.value = value
+  }
+
+  // Map<ingredientId, Set<ingredientId>> — each pair expanded both ways
+  const substituteMap = computed(() => {
+    const map = new Map()
+    for (const { a, b } of substitutePairs.value) {
+      if (!map.has(a)) map.set(a, new Set())
+      if (!map.has(b)) map.set(b, new Set())
+      map.get(a).add(b)
+      map.get(b).add(a)
+    }
+    return map
+  })
+
+  // current substitute ids for one ingredient, for populating the edit form
+  function ingSubstituteIds(id) {
+    return [...(substituteMap.value.get(id) ?? [])]
+  }
+
+  async function setIngredientSubstitutes(ingredientId, substituteIds) {
+    const updated = await api.setSubstitutes(ingredientId, substituteIds)
+    substitutePairs.value = updated
+  }
+
+  // { status: 'have' | 'substitute' | 'missing', substituteId?: string }
+  function ingredientStatus(ingredientId) {
+    if (cabinetItems.value.has(ingredientId)) return { status: 'have' }
+    const subs = substituteMap.value.get(ingredientId)
+    if (subs) {
+      const availableSub = [...subs].find((subId) => cabinetItems.value.has(subId))
+      if (availableSub) return { status: 'substitute', substituteId: availableSub }
+    }
+    return { status: 'missing' }
   }
 
   function setSearch(value) {
@@ -171,12 +215,6 @@ export function useDrinks() {
     return ingredients.value.find((i) => i.id === id)?.description ?? ''
   }
 
-  function missingIngredients(drink) {
-    return drink.ingredients
-      .map((i) => i.id)
-      .filter((id) => !cabinetItems.value.has(id))
-  }
-
   const ingredientsByCategory = computed(() => {
     const groups = {}
     for (const ing of ingredients.value) {
@@ -239,16 +277,29 @@ export function useDrinks() {
   const filteredDrinks = computed(() => {
     const base = applySearchAndFilters(drinks.value)
     const annotated = base.map((d) => {
-      const missing = missingIngredients(d)
-      return { ...d, missing, missingCount: missing.length }
+      // statusById: { [ingredientId]: { status, substituteId? } }
+      const statusById = {}
+      for (const ing of d.ingredients) {
+        statusById[ing.id] = ingredientStatus(ing.id)
+      }
+      const statuses = Object.values(statusById)
+      const missingCount = statuses.filter((s) => s.status === 'missing').length
+      const substitutedCount = statuses.filter((s) => s.status === 'substitute').length
+      return { ...d, statusById, missingCount, substitutedCount }
     })
-    return annotated.sort((a, b) => a.missingCount - b.missingCount)
+    return annotated.sort(
+      (a, b) => a.missingCount + a.substitutedCount - (b.missingCount + b.substitutedCount),
+    )
   })
 
   const cabinetDrinks = computed(() => {
     let result = filteredDrinks.value
     if (showOnlyMakeable.value) {
-      result = result.filter((d) => d.missingCount === 0)
+      result = result.filter((d) =>
+        includeSubstitutes.value
+          ? d.missingCount === 0
+          : d.missingCount === 0 && d.substitutedCount === 0,
+      )
     }
     return result
   })
@@ -268,6 +319,10 @@ export function useDrinks() {
     setSearch,
     showOnlyMakeable,
     toggleShowOnlyMakeable,
+    includeSubstitutes,
+    toggleIncludeSubstitutes,
+    ingSubstituteIds,
+    setIngredientSubstitutes,
     setCabinetItem,
     removeCabinetItem,
     toggleFilter,

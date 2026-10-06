@@ -1,5 +1,6 @@
 <script setup>
-import { Star } from 'lucide-vue-next'
+import { computed } from 'vue'
+import { Star, Shuffle } from 'lucide-vue-next'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent } from '@/components/ui/card'
 import { getUnitType } from '@/lib/units'
@@ -22,6 +23,16 @@ function formatAmount(ing) {
   const unitType = getUnitType(props.ingUnit(ing.id))
   return unitType.hasAmount ? `${ing.amount}${unitType.abbrev}` : unitType.abbrev
 }
+
+function statusFor(ing) {
+  return props.drink.statusById?.[ing.id]?.status
+}
+
+// only worth flagging once the drink is actually makeable this way —
+// a half-missing drink showing "substitute" would just be confusing
+const makeableWithSubstitute = computed(
+  () => props.drink.missingCount === 0 && props.drink.substitutedCount > 0,
+)
 </script>
 
 <template>
@@ -52,8 +63,15 @@ function formatAmount(ing) {
     <CardContent class="p-4 flex flex-col flex-1 gap-2">
       <h3 class="font-semibold leading-tight">{{ drink.name }}</h3>
 
-      <div v-if="drink.tags?.length" class="flex flex-wrap gap-1">
-        <Badge v-for="tag in drink.tags.slice(0, 3)" :key="tag" variant="secondary" class="text-[10px] px-1.5 py-0 font-normal">
+      <div v-if="drink.tags?.length || makeableWithSubstitute" class="flex flex-wrap gap-1">
+        <Badge
+          v-if="makeableWithSubstitute"
+          variant="outline"
+          class="text-[10px] px-1.5 py-0 font-normal gap-1 border-amber-500/50 text-amber-600 dark:text-amber-400"
+        >
+          <Shuffle class="size-2.5" /> Makeable with substitute
+        </Badge>
+        <Badge v-for="tag in drink.tags?.slice(0, 3)" :key="tag" variant="secondary" class="text-[10px] px-1.5 py-0 font-normal">
           {{ tag }}
         </Badge>
       </div>
@@ -73,9 +91,16 @@ function formatAmount(ing) {
             <li
               v-for="ing in drink.ingredients"
               :key="ing.id"
-              :class="drink.missing?.includes(ing.id) ? 'text-destructive' : 'text-muted-foreground'"
+              :class="{
+                'text-destructive': statusFor(ing) === 'missing',
+                'text-amber-600 dark:text-amber-400': statusFor(ing) === 'substitute',
+                'text-muted-foreground': statusFor(ing) === 'have',
+              }"
             >
               {{ formatAmount(ing) }} {{ ingName(ing.id) }}
+              <span v-if="statusFor(ing) === 'substitute'" class="text-[10px] opacity-80">
+                (using {{ ingName(drink.statusById[ing.id].substituteId) }})
+              </span>
             </li>
           </ul>
         </div>
