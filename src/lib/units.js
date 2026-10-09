@@ -7,6 +7,13 @@
 //   (vs. a plain count) — only true for genuinely poured/measured units.
 export const UNIT_TYPES = [
   {
+    value: 'cl',
+    label: 'Centilitres (measured, shows a fill level)',
+    abbrev: 'cl',
+    hasAmount: true,
+    showsFillLevel: true,
+  },
+  {
     value: 'ml',
     label: 'Millilitres (measured, shows a fill level)',
     abbrev: 'ml',
@@ -23,7 +30,7 @@ export const UNIT_TYPES = [
   {
     value: 'dashes',
     label: 'Dashes (bitters, small measured amounts)',
-    abbrev: 'dash',
+    abbrev: 'dashes',
     hasAmount: true,
     showsFillLevel: true,
   },
