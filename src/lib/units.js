@@ -44,7 +44,7 @@ export const UNIT_TYPES = [
   {
     value: 'top',
     label: 'Top up (no amount, e.g. soda water)',
-    abbrev: 'to top',
+    abbrev: 'Top with',
     hasAmount: false,
     showsFillLevel: true,
   },
